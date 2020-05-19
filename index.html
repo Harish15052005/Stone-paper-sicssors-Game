@@ -1,0 +1,44 @@
+<htmL>
+	<head>
+		<title>Stone paper scissors</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
+	</head>
+	<body>
+		<section class="main">
+			<section class="heading">	
+				<h2>Stone Paper Scissors Game (Bot vs Human)</h2>
+			</section>
+			<div class="container">
+				<div class="bot">
+					<div class="pap"><img src="img/paper.png"></div>
+					<div class="sto"><img src="img/scissors.png"></div>
+					<div class="sci"><img src="img/stone.png"></div>
+				</div>
+				<div class="human">
+					<div class="pap" id="pap"><img src="img/paper.png"></div>
+					<div class="sto" id="sto"><img src="img/stone.png"></div>
+					<div class="sci" id="sci"><img src="img/scissors.png"></div>
+				</div>
+				<div class="aud1">
+					<h1><span id="winner"></span></h1>
+				</div>
+				<div class="aud2">
+				</div>
+				<div class="points">
+					<input type="text" id="pointb" value="0" readonly="">
+					<p>-</p>
+					<input type="text" id="pointh" value="0" readonly="">
+				</div>
+				<div class="imgbot">
+					<p id="imgbot"></p>
+				</div>
+				<div class="imghuman">
+					<p id="imghuman"></p>
+				</div>
+			</div>
+		</section>
+<script src="js/script.js"></script>
+	</body>
+</htmL>
