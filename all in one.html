@@ -1,0 +1,351 @@
+<htmL>
+	<head>
+		<title>Stone paper scissors</title>
+		<meta charset="utf-8">
+		<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
+		<style>
+			*
+{
+	margin: 0;
+	padding:0;
+	box-sizing: border-box;
+}
+.main
+{
+	height:100vh;
+	width: 100%;
+	background: #1b1b2f;
+}
+.heading
+{
+	height: 10vh;
+	width:100%;
+	background: #e43f5a;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-family: 'Abril Fatface', cursive;
+	letter-spacing: 10px;
+	font-size: 1.3em;
+	color: #ffffff;
+}
+.container
+{
+	height: 90vh;
+	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(5,1fr);
+	grid-template-rows: repeat(3,1fr);
+	grid-gap: 25px;
+}
+.bot
+{
+	grid-row: 1/-1;
+	display: grid;
+	grid-template-rows: repeat(3,1fr);
+	grid-gap: 25px;
+}
+.human
+{
+	grid-column: 5/-1;
+	grid-row: 1/-1;
+	display: grid;
+	grid-template-rows: repeat(3,1fr);
+	grid-gap: 25px;
+}
+.human div,.bot div
+{
+	position: relative;
+}
+.human div img,.bot div img
+{
+	position: absolute;
+	height: 100%;
+	width: 100%;
+}
+.aud1
+{
+	grid-column: 2/5;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: yellow;
+	font-size: 3em;
+	transition: .5s linear;
+}
+.aud2
+{
+	grid-column: 2/5;
+	grid-row: 3/-1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: yellow;
+	font-size: 3em;
+	transition: .5s linear;
+}
+.imgbot
+{
+	grid-row: 2/3;
+}
+.imghuman
+{
+	grid-column: 4/5;
+}
+.points
+{
+	grid-column: 3/4;
+}
+.pap,.sto,.sci
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 2.5em;
+	color:white;
+	letter-spacing: 5px;
+	font-family: consolas;
+	cursor: pointer;
+	background: #77d8d8;
+}
+.imgbot,.imghuman
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 2em;
+	color: #77d8d8;
+	font-weight: bolder;font-family: verdana;
+	letter-spacing: 4px;
+}
+.points
+{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.points input
+{
+	height: 50px;
+	width: 50px;
+	text-align: center;
+	font-size: 1.9em;
+	border: none;
+	outline: none;
+	background: transparent;
+	color:yellow;
+}
+.points p
+{
+	font-size: 1.9em;
+	color:yellow;
+	font-weight: bolder;
+	user-select: none;
+}
+		</style>
+	</head>
+	<body>
+		<section class="main">
+			<section class="heading">	
+				<h2>Stone Paper Scissors Game (Bot vs Human)</h2>
+			</section>
+			<div class="container">
+				<div class="bot">
+					<div class="pap"><img src="img/paper.png"></div>
+					<div class="sto"><img src="img/scissors.png"></div>
+					<div class="sci"><img src="img/stone.png"></div>
+				</div>
+				<div class="human">
+					<div class="pap" id="pap"><img src="img/paper.png"></div>
+					<div class="sto" id="sto"><img src="img/stone.png"></div>
+					<div class="sci" id="sci"><img src="img/scissors.png"></div>
+				</div>
+				<div class="aud1">
+					<h1><span id="winner"></span></h1>
+				</div>
+				<div class="aud2">
+				</div>
+				<div class="points">
+					<input type="text" id="pointb" value="0" readonly="">
+					<p>-</p>
+					<input type="text" id="pointh" value="0" readonly="">
+				</div>
+				<div class="imgbot">
+					<p id="imgbot">Bot</p>
+				</div>
+				<div class="imghuman">
+					<p id="imghuman">Human</p>
+				</div>
+			</div>
+		</section>
+<script src="js/script.js">
+	// let's for changing NA
+let pap = document.getElementById('pap');
+let sci = document.getElementById('sci');
+let sto = document.getElementById('sto');
+let imghuman = document.getElementById('imghuman');
+let imgbot = document.getElementById('imgbot');
+let winner = document.getElementById('winner');
+let aud1 = document.querySelector('.aud1');
+let aud2 = document.querySelector('.aud2');
+
+// points let's  
+let pointb = document.getElementById('pointb');
+let pointh = document.getElementById('pointh');
+let vb = 0;
+let vh = 0;
+
+// gameplay let's
+let humanv = '';
+let botv ='';
+
+// bot functionilty
+let botvn;
+
+// event listners
+pap.addEventListener('click' , papchange);
+sci.addEventListener('click' , scichange);
+sto.addEventListener('click' , stochange);
+
+// functions
+function papchange(){
+	botvn = Math.floor(Math.random() * 7);
+	if (botvn == 1 || botvn == 4) {
+		botv = "paper";
+	};
+	if (botvn == 2 || botvn == 5) {
+		botv = "scissor";
+	};
+	if (botvn == 3 || botvn == 6) {
+		botv = "stone";
+	};
+	imghuman.innerHTML = 'paper';
+	imgbot.innerHTML = botv;
+	if ( imgbot.innerHTML == 'scissor') {
+		vb += 1;
+		pointb.value = vb; 
+	};
+	if ( imgbot.innerHTML == 'stone') {
+		vh += 1;
+		pointh.value = vh 
+	};
+	if (vh == 10) {
+		setTimeout(function(){
+			winner.innerHTML = 'You';
+			aud2.innerHTML = 'are winner';
+			aud1.style.tranform = "scale(1)";
+			aud2.style.tranform = "scale(1)";
+		},300)
+		setTimeout(function(){
+			location.reload();
+		},2000)
+	};
+	if (vb == 10) {
+		setTimeout(function(){
+			winner.innerHTML = 'Bot';
+			aud2.innerHTML = 'Is winner';
+			aud1.style.tranform = "scale(1)";
+			aud2.style.tranform = "scale(1)";
+		},300)
+		setTimeout(function(){
+			location.reload();
+		},2000)
+	};
+
+}
+function scichange(){
+	botvn = Math.floor(Math.random() * 7);
+	if (botvn == 1 || botvn == 4) {
+		botv = "paper";
+	};
+	if (botvn == 2 || botvn == 5) {
+		botv = "scissor";
+	};
+	if (botvn == 3 || botvn == 6) {
+		botv = "stone";
+	};
+	imghuman.innerHTML = 'scissor';
+	imgbot.innerHTML = botv;
+	imgbot.innerHTML = botv;
+	if ( imgbot.innerHTML == 'paper') {
+		vh += 1;
+		pointh.value = vh; 
+	};
+	if ( imgbot.innerHTML == 'stone') {
+		vb += 1;
+		pointb.value = vb;
+	};
+	if (vh == 10) {
+		setTimeout(function(){
+			winner.innerHTML = 'You';
+			aud2.innerHTML = 'are winner';
+			aud1.style.tranform = "scale(1)";
+			aud2.style.tranform = "scale(1)";
+		},300)
+		setTimeout(function(){
+			location.reload();
+		},2000)
+	};
+	if (vb == 10) {
+		setTimeout(function(){
+			winner.innerHTML = 'Bot';
+			aud2.innerHTML = 'Is winner';
+			aud1.style.tranform = "scale(1)";
+			aud2.style.tranform = "scale(1)";
+		},300)
+		setTimeout(function(){
+			location.reload();
+		},2000)
+	};
+
+}
+function stochange(){
+	botvn = Math.floor(Math.random() * 7);
+	if (botvn == 1 || botvn == 4) {
+		botv = "paper";
+	};
+	if (botvn == 2 || botvn == 5) {
+		botv = "scissor";
+	};
+	if (botvn == 3|| botvn == 6) {
+		botv = "stone";
+	};
+	imghuman.innerHTML = 'stone';
+	imgbot.innerHTML = botv;
+	if ( imgbot.innerHTML == 'paper') {
+		vb += 1;
+		pointb.value = vb; 
+	};
+	if ( imgbot.innerHTML == 'scissor') {
+		vh += 1;
+		pointh.value = vh;
+	};
+	if (vh == 10) {
+		setTimeout(function(){
+			winner.innerHTML = 'You';
+			aud2.innerHTML = 'are winner';
+			aud1.style.tranform = "scale(1)";
+			aud2.style.tranform = "scale(1)";
+		},300)
+		setTimeout(function(){
+			location.reload();
+		},2000)
+	};
+	if (vb == 10) {
+		setTimeout(function(){
+			winner.innerHTML = 'Bot';
+			aud2.innerHTML = 'Is winner';
+			aud1.style.tranform = "scale(1)";
+			aud2.style.tranform = "scale(1)";
+		},300)
+		setTimeout(function(){
+			location.reload();
+		},2000)
+	};
+
+}
+// gameplay if conditions
+
+</script>
+	</body>
+</htmL>
